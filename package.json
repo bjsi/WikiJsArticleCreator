@@ -1,14 +1,14 @@
 {
-  "name": "obsidian-sample-plugin",
-  "version": "0.9.7",
-  "description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+  "name": "wiki-js-article-creator",
+  "version": "0.0.1",
+  "description": "Adds a modal for that allows you to easily add the YAML frontmatter for a Wiki js article.",
   "main": "main.js",
   "scripts": {
     "dev": "rollup --config rollup.config.js -w",
     "build": "rollup --config rollup.config.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["wikijs"],
+  "author": "Experimental Learning",
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.1.0",

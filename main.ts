@@ -1,30 +1,21 @@
-import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
-
-interface MyPluginSettings {
-	mySetting: string;
-}
-
-const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
-}
+import { App, Modal, Plugin, TextComponent, ButtonComponent} from 'obsidian';
 
 export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
 
 	async onload() {
-		console.log('loading plugin');
+		console.log('Loading WikiJsArticleCreator plugin');
 
 		await this.loadSettings();
 
-		this.addRibbonIcon('dice', 'Sample Plugin', () => {
-			new Notice('This is a notice!');
-		});
+		// this.addRibbonIcon('dice', 'Sample Plugin', () => {
+		// 	new Notice('This is a notice!');
+		// });
 
-		this.addStatusBarItem().setText('Status Bar Text');
+		// this.addStatusBarItem().setText('Status Bar Text');
 
 		this.addCommand({
-			id: 'open-sample-modal',
-			name: 'Open Sample Modal',
+			id: 'create-wiki-js-note',
+			name: 'Create Wiki.js Note',
 			// callback: () => {
 			// 	console.log('Simple Callback');
 			// },
@@ -39,74 +30,81 @@ export default class MyPlugin extends Plugin {
 				return false;
 			}
 		});
-
-		this.addSettingTab(new SampleSettingTab(this.app, this));
-
-		this.registerCodeMirror((cm: CodeMirror.Editor) => {
-			console.log('codemirror', cm);
-		});
-
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
-
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
 
 	onunload() {
-		console.log('unloading plugin');
+		console.log('Unloading WikiJsArticleCreator plugin');
 	}
 
 	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-	}
+    }
 
 	async saveSettings() {
-		await this.saveData(this.settings);
 	}
 }
 
 class SampleModal extends Modal {
+    title = "";
+    description = "";
+
+
 	constructor(app: App) {
 		super(app);
 	}
 
-	onOpen() {
+	onOpen = () => {
 		let {contentEl} = this;
-		contentEl.setText('Woah!');
+
+        contentEl.appendText("Title: ");
+        let inputTitleField = new TextComponent(contentEl).setPlaceholder("Title");
+        contentEl.createEl("br");
+        
+        contentEl.appendText("Description: ");
+        let inputDescriptionField = new TextComponent(contentEl).setPlaceholder("Description");
+        contentEl.createEl("br");
+
+        contentEl.appendText("Folder Path: ");
+        let inputFolderField = new TextComponent(contentEl).setPlaceholder("Path");
+        contentEl.createEl("br");
+        
+        contentEl.appendText("Tags: ");
+        let inputTagsField = new TextComponent(contentEl).setPlaceholder("Tags");
+
+        contentEl.createEl("br")
+
+        contentEl.appendText("Published?: ");
+        let inputPublishedField = new TextComponent(contentEl).setValue("true");
+        contentEl.createEl("br");
+
+		let inputButton = new ButtonComponent(contentEl)
+		.setButtonText("Create Article")
+		.onClick(async () => {
+            let curtime = new Date(Date.now()).toISOString();
+            let text = `---
+title: ${inputTitleField.getValue()}
+description: ${inputDescriptionField.getValue()}
+published: ${inputPublishedField.getValue()}
+date: ${curtime}
+tags: ${inputTagsField.getValue()}
+editor: undefined
+dateCreated: ${curtime}
+---`
+
+            let fp = inputFolderField.getValue();
+            if (!fp.endsWith('.md'))
+                fp = fp + '.md';
+            await this.app.vault.create(fp, text);
+            await this.app.workspace.openLinkText(fp, '', false, { active: true  });
+
+			this.close();
+		});
+
+		inputTitleField.inputEl.focus();
 	}
 
 	onClose() {
 		let {contentEl} = this;
+        		  
 		contentEl.empty();
-	}
-}
-
-class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
-
-	constructor(app: App, plugin: MyPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
-
-	display(): void {
-		let {containerEl} = this;
-
-		containerEl.empty();
-
-		containerEl.createEl('h2', {text: 'Settings for my awesome plugin.'});
-
-		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue('')
-				.onChange(async (value) => {
-					console.log('Secret: ' + value);
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
 	}
 }
