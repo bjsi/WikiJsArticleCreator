@@ -1,3 +1,3 @@
-## Obsidian Wiki.js Article Creator
+## Obsidian Wiki.js Utils
 
-Adds a simple command that opens a dialog for you to easily add the Wiki js YAML frontmatter to a new Obsidian note.
+Provides some commands and modals for quickly adding notes with Wiki.js YAML metadata.
