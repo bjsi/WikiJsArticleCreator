@@ -1,11 +1,10 @@
 import { normalizePath, App } from "obsidian";
 
 export class FileUtils {
-
   private readonly app: App;
 
   constructor(app: App) {
-  	this.app = app;
+    this.app = app;
   }
 
   getParentOfNormalized(normalizedPath: string) {

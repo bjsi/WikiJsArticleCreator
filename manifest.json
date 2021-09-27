@@ -1,10 +1,10 @@
 {
-	"id": "wiki-js-utils",
-	"name": "Wiki.js Utils",
-	"version": "0.1",
-	"minAppVersion": "0.9.12",
-	"description": "Provides some commands and modals for quickly adding notes with Wiki.js YAML metadata.",
-	"author": "Jamesb | Experimental Learning",
-	"authorUrl": "https://github.com/bjsi/obsidian-wiki-js-utils",
-	"isDesktopOnly": false
+  "id": "wiki-js-utils",
+  "name": "Wiki.js Utils",
+  "version": "0.1",
+  "minAppVersion": "0.9.12",
+  "description": "Provides some commands and modals for quickly adding notes with Wiki.js YAML metadata.",
+  "author": "Jamesb | Experimental Learning",
+  "authorUrl": "https://github.com/bjsi/obsidian-wiki-js-utils",
+  "isDesktopOnly": false
 }

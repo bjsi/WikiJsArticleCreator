@@ -1,7 +1,7 @@
 export interface Settings {
-	Folders: string[]
+  Folders: string[];
 }
 
 export const DefaultSettings: Settings = {
-	Folders: ["Concepts", "People", "Articles"]
+  Folders: ["Concepts", "People", "Articles"],
 };
