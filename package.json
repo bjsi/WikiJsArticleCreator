@@ -1,14 +1,18 @@
 {
-  "name": "wiki-js-article-creator",
+  "name": "Wiki.js Utils",
   "version": "0.0.1",
-  "description": "Adds a modal for that allows you to easily add the YAML frontmatter for a Wiki js article.",
+  "description": "Provides some commands and modals for quickly adding notes with Wiki.js YAML metadata.",
   "main": "main.js",
   "scripts": {
     "dev": "rollup --config rollup.config.js -w",
     "build": "rollup --config rollup.config.js"
   },
-  "keywords": ["wikijs"],
-  "author": "Experimental Learning",
+  "keywords": [
+    "wiki.js",
+    "obsidian",
+    "plugin"
+  ],
+  "author": "Jamesb | Experimental Learning",
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.1.0",
@@ -19,5 +23,8 @@
     "rollup": "^2.32.1",
     "tslib": "^2.0.3",
     "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "sanitize-filename": "^1.6.3"
   }
 }
